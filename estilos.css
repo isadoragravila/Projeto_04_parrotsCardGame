@@ -37,12 +37,19 @@ body {
     border: 1px solid #99CEA8;
     border-radius: 5px;
     margin: 0 17px 34px 17px;
+    position: relative;
 }
 
 .carta img {
     width: 100px;
     height: 100px;
     object-fit: cover;
+}
+
+.carta .verso {
+    position: absolute;
+    top: 24px;
+    left: 10px;
 }
 
 .conteudo .carta:hover {
@@ -57,6 +64,10 @@ body {
 
 .escondido {
     display: none;
+}
+
+.transparente {
+    opacity: 0;
 }
 
 @media (max-width: 414px) {
