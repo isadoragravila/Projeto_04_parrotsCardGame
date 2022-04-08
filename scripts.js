@@ -1,10 +1,10 @@
-let gifs =["images/bobrossparrot.gif", "images/explodyparrot.gif", "images/fiestaparrot.gif", "images/metalparrot.gif", "images/revertitparrot.gif", "images/tripletsparrot.gif", "images/unicornparrot.gif"];
+let gifs =["images/tripletsparrot.gif", "images/unicornparrot.gif" , "images/fiestaparrot.gif", "images/metalparrot.gif", "images/revertitparrot.gif", "images/bobrossparrot.gif" , "images/explodyparrot.gif"];
 let embaralhado = [];
 let contador = 0;
-let arr = [];
+let cartasClicadas = [];
 let jogadas = 0;
 
-// pede o número de cartas e continua até que o valor seja válido (ok)
+// pede o número de cartas e continua até que o valor seja válido
 let numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 4 e max: 14)\n");
 numeroCartas = Number(numeroCartas);
 
@@ -13,7 +13,7 @@ while (numeroCartas > 14 || numeroCartas < 4 || numeroCartas % 2 === 1 || isNaN(
     numeroCartas = Number(numeroCartas);
 }
 
-// insere os gifs das cartas em um array (ok)
+// insere os gifs das cartas em um array
 for (let i = 0; i < numeroCartas/2; i++) {
     embaralhado.push(gifs[i]);
     embaralhado.push(gifs[i]);
@@ -25,7 +25,7 @@ embaralhado.sort(comparador);
         return Math.random() - 0.5; 
     }
 
-// aparece a qtde escolhida de cartas + insere os gifs do array embaralhado nas cartas (ok)
+// aparece a qtde escolhida de cartas + insere os gifs do array embaralhado nas cartas
 for (let i = 0; i < numeroCartas; i++) {
     let conteudo = document.querySelector(".conteudo");
     conteudo.innerHTML += `
@@ -37,22 +37,26 @@ for (let i = 0; i < numeroCartas; i++) {
     </div>`;
 }
 
-//ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função virarCarta (ok)
+//ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função virarCarta
 function cliqueNaCarta (elemento) {
     jogadas++;
     elemento.classList.add("clicado");
     elemento.querySelector(".frente").classList.add("transparente");
     elemento.querySelector(".verso").classList.remove("transparente");
-    arr.push(elemento.innerHTML);
+    cartasClicadas.push(elemento.innerHTML);
     contador++;
     if (contador === 2) {
         setTimeout(virarCarta, 1000);
     }
+    let teste = document.querySelectorAll(".frente.transparente");
+    if (teste.length === numeroCartas) {
+        setTimeout(fimDeJogo, 500);
+    }
 }
 
-//se as cartas são iguais, elas permanecem viradas, se elas são diferentes elas desviram (ok)
+//se as cartas são iguais, elas permanecem viradas, se elas são diferentes elas desviram
 function virarCarta () {
-    if (arr[0] !== arr[1]) {
+    if (cartasClicadas[0] !== cartasClicadas[1]) {
         while (contador !== 0) {
             document.querySelector(".clicado").querySelector(".frente").classList.remove("transparente");
             document.querySelector(".clicado").querySelector(".verso").classList.add("transparente");
@@ -64,6 +68,10 @@ function virarCarta () {
         document.querySelector(".clicado").classList.remove("clicado");
         contador = 0;
     }
-    arr.shift();
-    arr.shift();
+    cartasClicadas = [];
+}
+
+//quando todos os pares são encontrados o jogo acaba
+function fimDeJogo () {
+    alert(`Você ganhou em ${jogadas} jogadas!`);
 }
