@@ -39,18 +39,20 @@ for (let i = 0; i < numeroCartas; i++) {
 
 //ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função virarCarta
 function cliqueNaCarta (elemento) {
-    jogadas++;
-    elemento.classList.add("clicado");
-    elemento.querySelector(".frente").classList.add("transparente");
-    elemento.querySelector(".verso").classList.remove("transparente");
-    cartasClicadas.push(elemento.innerHTML);
-    contador++;
-    if (contador === 2) {
-        setTimeout(virarCarta, 1000);
-    }
-    let teste = document.querySelectorAll(".frente.transparente");
-    if (teste.length === numeroCartas) {
-        setTimeout(fimDeJogo, 500);
+    if (elemento.classList.contains("clicado") === false) {
+        jogadas++;
+        elemento.classList.add("clicado");
+        elemento.querySelector(".frente").classList.add("transparente");
+        elemento.querySelector(".verso").classList.remove("transparente");
+        cartasClicadas.push(elemento.innerHTML);
+        contador++;
+        if (contador === 2) {
+            setTimeout(virarCarta, 1000);
+        }
+        let teste = document.querySelectorAll(".frente.transparente");
+        if (teste.length === numeroCartas) {
+            setTimeout(fimDeJogo, 500);
+        }
     }
 }
 
