@@ -41,9 +41,6 @@ body {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    position: absolute;
-    top: 24px;
-    left: 10px;
 }
 
  .carta:hover {
@@ -73,7 +70,11 @@ body {
     transform: rotateY(180deg);
   }
 
-  .carta:active .front-face {
+  .back-face.virar {
+    transform: rotateY(0deg);
+  }
+
+  .front-face.virar {
     transform: rotateY(-180deg);
   }
 
