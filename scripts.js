@@ -12,10 +12,16 @@ numeroCartas = Number(numeroCartas);
 function distribuirCartas () {
     // continua a pedir o número de cartas até que o valor seja válido
     while (numeroCartas > 14 || numeroCartas < 4 || numeroCartas % 2 === 1 || isNaN(numeroCartas)) {
-        numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 2 e max: 14)\n");
+        numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 4 e max: 14)\n");
         numeroCartas = Number(numeroCartas);
     }
     
+    embaralhado = [];
+    contador = 0;
+    cartasClicadas = [];
+    jogadas = 0;
+    document.querySelector(".conteudo").innerHTML = "";
+
     // insere os gifs das cartas em um array
     for (let i = 0; i < numeroCartas/2; i++) {
         embaralhado.push(gifs[i]);
@@ -80,4 +86,17 @@ function esconderCarta () {
 //quando todos os pares são encontrados o jogo acaba
 function fimDeJogo () {
     alert(`Você ganhou em ${jogadas} jogadas!`);
+    reiniciarPartida ();
+}
+
+
+function reiniciarPartida () {
+    let verificador = prompt ("Você gostaria de reiniciar a partida?\n\nRespostas válidas: sim ou não\n");
+    if (verificador === "sim") {
+        numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 4 e max: 14)\n");
+        numeroCartas = Number(numeroCartas);
+        distribuirCartas ();
+    } else if (verificador === "não") {
+        alert("Muito obrigado!");
+    }
 }
