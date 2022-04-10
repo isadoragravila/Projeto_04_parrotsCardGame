@@ -22,6 +22,21 @@ body {
     color: #75B79E;
 }
 
+.relogio {
+    width: 60px;
+    height: 30px;
+    background-color: #75B79E;
+    border-radius: 8px;
+    box-shadow: 0 0 1em silver;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    color: #EEF9BF;
+}
+
 .conteudo {
     display: flex;
     justify-content: center;
@@ -45,6 +60,7 @@ body {
 
  .carta:hover {
     filter: brightness(95%);
+    cursor: pointer;
 }
 
 .face {

@@ -3,6 +3,8 @@ let embaralhado = [];
 let contador = 0;
 let cartasClicadas = [];
 let jogadas = 0;
+let relogio;
+let idInterval;
 
 // pede o número de cartas
 let numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 4 e max: 14)\n");
@@ -43,11 +45,15 @@ function distribuirCartas () {
             <div class="back-face face"><img src="${embaralhado[i]}" /></div>
         </div>`;
     }
+
+    relogio = 0;
+    document.querySelector(".relogio").innerHTML = `${relogio} s`;
+    contarTempo ();
 }
 
 distribuirCartas ();
 
-//ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função esconderCarta
+// ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função esconderCarta
 function cliqueNaCarta (elemento) {
     if (elemento.classList.contains("clicado") === false) {
         jogadas++;
@@ -66,7 +72,7 @@ function cliqueNaCarta (elemento) {
     }
 }
 
-//se as cartas são iguais, elas permanecem viradas, se elas são diferentes elas desviram
+// se as cartas são iguais, elas permanecem viradas, se elas são diferentes elas desviram
 function esconderCarta () {
     if (cartasClicadas[0] !== cartasClicadas[1]) {
         while (contador !== 0) {
@@ -83,13 +89,14 @@ function esconderCarta () {
     cartasClicadas = [];
 }
 
-//quando todos os pares são encontrados o jogo acaba
+// quando todos os pares são encontrados o jogo acaba e chama a função reiniciarPartida
 function fimDeJogo () {
-    alert(`Você ganhou em ${jogadas} jogadas!`);
+    clearInterval(idInterval);
+    alert(`PARABÉNS!\n\nVocê ganhou em ${jogadas} jogadas, em um tempo de ${relogio} segundos!`);
     reiniciarPartida ();
 }
 
-
+// verifica se o usuário quer jogar de novo
 function reiniciarPartida () {
     let verificador = prompt ("Você gostaria de reiniciar a partida?\n\nRespostas válidas: sim ou não\n");
     if (verificador === "sim") {
@@ -97,6 +104,16 @@ function reiniciarPartida () {
         numeroCartas = Number(numeroCartas);
         distribuirCartas ();
     } else if (verificador === "não") {
-        alert("Muito obrigado!");
+        alert("Muito obrigado por jogar PARROTS CARD GAME!\n\nVolte sempre!");
     }
+}
+
+// relógio
+function contarTempo() {
+    idInterval = setInterval(incrementador, 1000);
+}
+
+function incrementador () {
+    relogio++;
+    document.querySelector(".relogio").innerHTML = `${relogio} s`;
 }
