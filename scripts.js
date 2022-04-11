@@ -10,7 +10,6 @@ let idInterval;
 let numeroCartas = prompt ("Com quantas cartas você quer jogar?\n\nSOMENTE NÚMEROS PARES!\n(min: 4 e max: 14)\n");
 numeroCartas = Number(numeroCartas);
 
-
 function distribuirCartas () {
     // continua a pedir o número de cartas até que o valor seja válido
     while (numeroCartas > 14 || numeroCartas < 4 || numeroCartas % 2 === 1 || isNaN(numeroCartas)) {
@@ -41,8 +40,8 @@ function distribuirCartas () {
         let conteudo = document.querySelector(".conteudo");
         conteudo.innerHTML += `
         <div class="carta" onclick="cliqueNaCarta(this)">
-            <div class="front-face face"><img src="images/front.png" /></div>
-            <div class="back-face face"><img src="${embaralhado[i]}" /></div>
+            <div class="front-face face"><img class="fundo" src="images/front.png" /></div>
+            <div class="back-face face"><img class="gif" src="${embaralhado[i]}" /></div>
         </div>`;
     }
 
@@ -55,7 +54,11 @@ distribuirCartas ();
 
 // ao clicar o gif aparece, ao clicar em duas, espera 1segundo e chama a função esconderCarta
 function cliqueNaCarta (elemento) {
-    if (elemento.classList.contains("clicado") === false) {
+    if (elemento.classList.contains("aberto")) {
+        return ;
+    } else if (elemento.classList.contains("clicado")) {
+        return ;
+    } else {
         jogadas++;
         elemento.classList.add("clicado");
         elemento.querySelector(".front-face").classList.add("virar");
@@ -63,11 +66,12 @@ function cliqueNaCarta (elemento) {
         cartasClicadas.push(elemento.innerHTML);
         contador++;
         if (contador === 2) {
+            document.querySelector(".bloqueado").classList.remove("escondido");
             setTimeout(esconderCarta, 1000);
         }
         let cartasAbertas = document.querySelectorAll(".front-face.virar");
         if (cartasAbertas.length === numeroCartas) {
-            setTimeout(fimDeJogo, 500);
+            setTimeout(fimDeJogo, 1000);
         }
     }
 }
@@ -82,10 +86,14 @@ function esconderCarta () {
             contador--;
         }
     }  else {
+        document.querySelector(".clicado").classList.add("aberto");
         document.querySelector(".clicado").classList.remove("clicado");
+        document.querySelector(".clicado").classList.add("aberto");
         document.querySelector(".clicado").classList.remove("clicado");
+
         contador = 0;
     }
+    document.querySelector(".bloqueado").classList.add("escondido");
     cartasClicadas = [];
 }
 
@@ -105,7 +113,14 @@ function reiniciarPartida () {
         distribuirCartas ();
     } else if (verificador === "não") {
         alert("Muito obrigado por jogar PARROTS CARD GAME!\n\nVolte sempre!");
+    } else {
+        respostaErrada ();
     }
+}
+
+function respostaErrada () {
+    alert("RESPOSTA NÃO VÁLIDA!");
+    reiniciarPartida ();
 }
 
 // relógio
